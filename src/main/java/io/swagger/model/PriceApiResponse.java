@@ -1,13 +1,11 @@
 package io.swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.threeten.bp.OffsetDateTime;
-import org.springframework.validation.annotation.Validated;
+import java.time.OffsetDateTime;
+import java.util.Objects;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * PriceApiResponse
@@ -15,15 +13,17 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-11-07T10:28:17.635Z[GMT]")
 
+public class PriceApiResponse {
 
-public class PriceApiResponse   {
   @JsonProperty("brand_id")
   private Integer brandId = null;
 
   @JsonProperty("start_date")
+  //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
   private OffsetDateTime startDate = null;
 
   @JsonProperty("end_date")
+  //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
   private OffsetDateTime endDate = null;
 
   @JsonProperty("product_id")
@@ -48,11 +48,12 @@ public class PriceApiResponse   {
 
   /**
    * Get brandId
+   *
    * @return brandId
    **/
   @Schema(description = "")
-  
-    public Integer getBrandId() {
+
+  public Integer getBrandId() {
     return brandId;
   }
 
@@ -67,12 +68,13 @@ public class PriceApiResponse   {
 
   /**
    * Get startDate
+   *
    * @return startDate
    **/
   @Schema(description = "")
-  
-    @Valid
-    public OffsetDateTime getStartDate() {
+
+  @Valid
+  public OffsetDateTime getStartDate() {
     return startDate;
   }
 
@@ -87,12 +89,13 @@ public class PriceApiResponse   {
 
   /**
    * Get endDate
+   *
    * @return endDate
    **/
   @Schema(description = "")
-  
-    @Valid
-    public OffsetDateTime getEndDate() {
+
+  @Valid
+  public OffsetDateTime getEndDate() {
     return endDate;
   }
 
@@ -107,11 +110,12 @@ public class PriceApiResponse   {
 
   /**
    * Get productId
+   *
    * @return productId
    **/
   @Schema(description = "")
-  
-    public Integer getProductId() {
+
+  public Integer getProductId() {
     return productId;
   }
 
@@ -126,11 +130,12 @@ public class PriceApiResponse   {
 
   /**
    * Get price
+   *
    * @return price
    **/
   @Schema(description = "")
-  
-    public Double getPrice() {
+
+  public Double getPrice() {
     return price;
   }
 
@@ -145,11 +150,12 @@ public class PriceApiResponse   {
 
   /**
    * Get priceList
+   *
    * @return priceList
    **/
   @Schema(description = "")
-  
-    public Integer getPriceList() {
+
+  public Integer getPriceList() {
     return priceList;
   }
 
@@ -164,11 +170,12 @@ public class PriceApiResponse   {
 
   /**
    * Get priority
+   *
    * @return priority
    **/
   @Schema(description = "")
-  
-    public Integer getPriority() {
+
+  public Integer getPriority() {
     return priority;
   }
 
@@ -183,11 +190,12 @@ public class PriceApiResponse   {
 
   /**
    * Get curr
+   *
    * @return curr
    **/
   @Schema(description = "")
-  
-    public String getCurr() {
+
+  public String getCurr() {
     return curr;
   }
 
@@ -224,7 +232,7 @@ public class PriceApiResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class PriceApiResponse {\n");
-    
+
     sb.append("    brandId: ").append(toIndentedString(brandId)).append("\n");
     sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");
@@ -238,8 +246,8 @@ public class PriceApiResponse   {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first
+   * line).
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {
