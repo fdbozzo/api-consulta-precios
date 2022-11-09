@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS prices (
   priority TINYINT NOT NULL,
   price DOUBLE PRECISION NOT NULL,
   price_list SMALLINT NOT NULL,
-  curr CHAR(3) NOT NULL
+  curr CHAR(3) NOT NULL,
+  FOREIGN KEY(brand_id) REFERENCES brands(id)
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS Prices_Composite_Key ON prices(brand_id, product_id, start_date, end_date, priority)
