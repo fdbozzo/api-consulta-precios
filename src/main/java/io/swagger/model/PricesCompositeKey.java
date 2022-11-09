@@ -3,6 +3,8 @@ package io.swagger.model;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.Objects;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,11 +12,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@Embeddable
 public class PricesCompositeKey implements Serializable {
+
+  @NotNull
   private Integer brandId;
+  //private Brands brands;
+  @NotNull
   private Integer productId;
+  @NotNull
   private OffsetDateTime startDate = null;
+  @NotNull
   private OffsetDateTime endDate = null;
+  @NotNull
   private Integer priority;
 
 //  public PricesCompositeKey(Integer brandId, Integer productId, OffsetDateTime startDate, OffsetDateTime endDate, Integer priority) {

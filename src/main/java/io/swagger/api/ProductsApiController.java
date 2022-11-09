@@ -2,12 +2,15 @@ package io.swagger.api;
 
 import io.swagger.model.PriceApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.model.PriceApiResponseInner;
 import io.swagger.model.Prices;
 import io.swagger.service.ProductsService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,20 +67,22 @@ public class ProductsApiController implements ProductsApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                Prices prices = productsService.findByBrandIdProductIdDatetime(brandId, productId, qryDate);
+                List<Prices> prices = productsService.findByBrandIdProductIdDatetime(brandId, productId, qryDate);
                 PriceApiResponse priceApiResponse;
                 HttpStatus httpStatus;
 
-                if (prices != null && prices.getProductId() > 0) {
-                    priceApiResponse = new PriceApiResponse()
-                        .brandId(prices.getBrandId())
-                        .productId(prices.getProductId())
-                        .price(prices.getPrice())
-                        .priceList(prices.getPriceList())
-                        .priority(prices.getPriority())
-                        .startDate(prices.getStartDate())
-                        .endDate(prices.getEndDate())
-                        .curr(prices.getCurr().toString());
+                if (prices != null && prices.get(0).getProductId() > 0) {
+                    PriceApiResponseInner priceApiResponseInner = new PriceApiResponseInner()
+                        .brandId(prices.get(0).getBrandId())
+                        .productId(prices.get(0).getProductId())
+                        .price(prices.get(0).getPrice())
+                        .priceList(prices.get(0).getPriceList())
+                        .priority(prices.get(0).getPriority())
+                        .startDate(prices.get(0).getStartDate())
+                        .endDate(prices.get(0).getEndDate())
+                        .curr(prices.get(0).getCurr().toString());
+                    priceApiResponse = new PriceApiResponse();
+                    priceApiResponse.add(priceApiResponseInner);
                     httpStatus = HttpStatus.OK;
                 } else {
                     priceApiResponse = new PriceApiResponse();

@@ -1,58 +1,68 @@
 package io.swagger.model;
 
-import static org.hibernate.id.PersistentIdentifierGenerator.PK;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-//@Data
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+//@IdClass(PricesCompositeKey.class)
 @Entity
-@IdClass(PricesCompositeKey.class)
-public class Prices {
+@Table(name = "prices")
+//    uniqueConstraints = @UniqueConstraint(columnNames = {"brand_id", "product_id", "start_date", "end_date", "priority" }))
+public class Prices implements Serializable {
 
   // PK
+  @Embedded
   @Id
-  @Column(nullable = false)
-  private Integer brandId;
+  //@Column(nullable = false)
+  //@ManyToOne(fetch = FetchType.LAZY)
+  //@JoinColumn(name = "brand_id")
+  //@MapsId
+  private PricesCompositeKey pricesCompositeKey;
 
-  @Id
-  @Column(nullable = false)
-  private Integer productId;
-
-  @Id
-  @Column(nullable = false)
-  private OffsetDateTime startDate = null;
-
-  @Id
-  @Column(nullable = false)
-  private OffsetDateTime endDate = null;
-
-  @Id
-  @Column(nullable = false)
-  private Integer priority;
+//  @Id
+//  //private Integer brandId;
+//  private Brands brands;
+//
+//  @Id
+//  @Column(nullable = false)
+//  private Integer productId;
+//
+//  @Id
+//  @Column(nullable = false)
+//  private OffsetDateTime startDate = null;
+//
+//  @Id
+//  @Column(nullable = false)
+//  private OffsetDateTime endDate = null;
+//
+//  @Id
+//  @Column(nullable = false)
+//  private Integer priority;
   // end PK
 
   @Column(nullable = false)
@@ -66,25 +76,30 @@ public class Prices {
   @Enumerated(EnumType.STRING)
   private CurrencyType curr;
 
+  public int getBrandId() {return this.pricesCompositeKey.getBrandId();};
+  public int getProductId() {return this.pricesCompositeKey.getProductId();};
+  public OffsetDateTime getStartDate() {return this.pricesCompositeKey.getStartDate();};
+  public OffsetDateTime getEndDate() {return this.pricesCompositeKey.getEndDate();};
+  public int getPriority() {return this.pricesCompositeKey.getPriority();};
 
   //private OffsetDateTime rqyDate = null;
 
   public PricesCompositeKey getId() {
     return new PricesCompositeKey(
-        brandId,
-        productId,
-        startDate,
-        endDate,
-        priority
+        pricesCompositeKey.getBrandId(),
+        pricesCompositeKey.getProductId(),
+        pricesCompositeKey.getStartDate(),
+        pricesCompositeKey.getEndDate(),
+        pricesCompositeKey.getPriority()
     );
   }
 
   public void setId(PricesCompositeKey id) {
-    this.brandId = id.getBrandId();
-    this.productId = id.getProductId();
-    this.startDate = id.getStartDate();
-    this.endDate = id.getEndDate();
-    this.priority = id.getPriority();
+    this.pricesCompositeKey.setBrandId(id.getBrandId());
+    this.pricesCompositeKey.setProductId(id.getProductId());
+    this.pricesCompositeKey.setStartDate(id.getStartDate());
+    this.pricesCompositeKey.setEndDate(id.getEndDate());
+    this.pricesCompositeKey.setPriority(id.getPriority());
   }
 
   public enum CurrencyType {
