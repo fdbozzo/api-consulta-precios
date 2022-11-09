@@ -2,37 +2,45 @@ package io.swagger.api;
 
 import io.swagger.model.PriceApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.model.Prices;
+import io.swagger.service.ProductsService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
-//import org.threeten.bp.OffsetDateTime;
 import java.time.OffsetDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+@Slf4j
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-11-07T10:28:17.635Z[GMT]")
 @RestController
+//@CrossOrigin(origins="*")
 public class ProductsApiController implements ProductsApi {
 
-    private static final Logger log = LoggerFactory.getLogger(ProductsApiController.class);
+    //private static final Logger log = LoggerFactory.getLogger(ProductsApiController.class);
 
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    public ProductsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    @Autowired
+    private final ProductsService productsService;
+
+    @Autowired
+    public ProductsApiController(ObjectMapper objectMapper, HttpServletRequest request,
+        ProductsService productsService) {
         this.objectMapper = objectMapper;
         this.request = request;
+        this.productsService = productsService;
     }
 
     public ResponseEntity<PriceApiResponse> findByBrandIdProductIdDatetime(
@@ -56,9 +64,30 @@ public class ProductsApiController implements ProductsApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<PriceApiResponse>(
-                    objectMapper.readValue("{\n  \"end_date\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"price_list\" : 5,\n  \"price\" : 1.46,\n  \"product_id\" : 6,\n  \"priority\" : 5,\n  \"curr\" : \"curr\",\n  \"brand_id\" : 0,\n  \"start_date\" : \"2000-01-23T04:56:07.000+00:00\"\n}", PriceApiResponse.class),
-                    HttpStatus.NOT_IMPLEMENTED);
+                Prices prices = productsService.findByBrandIdProductIdDatetime(brandId, productId, qryDate);
+                PriceApiResponse priceApiResponse;
+                HttpStatus httpStatus;
+
+                if (prices != null && prices.getProductId() > 0) {
+                    priceApiResponse = new PriceApiResponse()
+                        .brandId(prices.getBrandId())
+                        .productId(prices.getProductId())
+                        .price(prices.getPrice())
+                        .priceList(prices.getPriceList())
+                        .priority(prices.getPriority())
+                        .startDate(prices.getStartDate())
+                        .endDate(prices.getEndDate())
+                        .curr(prices.getCurr().toString());
+                    httpStatus = HttpStatus.OK;
+                } else {
+                    priceApiResponse = new PriceApiResponse();
+                    httpStatus = HttpStatus.NOT_FOUND;
+                }
+                return new ResponseEntity<PriceApiResponse>(priceApiResponse, httpStatus);
+//                return new ResponseEntity<PriceApiResponse>(
+//                    productsService.findByBrandIdProductIdDatetime(brandId, productId, qryDate),
+//                    HttpStatus.OK
+//                );
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<PriceApiResponse>(HttpStatus.INTERNAL_SERVER_ERROR);

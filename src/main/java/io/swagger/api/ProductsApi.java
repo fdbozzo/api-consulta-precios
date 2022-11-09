@@ -24,6 +24,7 @@ import javax.validation.constraints.*;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-11-07T10:28:17.635Z[GMT]")
 @Validated
+@RequestMapping("/api/v3")
 public interface ProductsApi {
 
   @Operation(summary = "Busca un artículo por marca, id prod. y fecha/hora",
