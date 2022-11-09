@@ -5,7 +5,7 @@ INSERT INTO brands (id, name) VALUES (1, 'Zara');
 INSERT INTO prices
   (brand_id, product_id, start_date, end_date, priority, price, price_list, curr)
   VALUES
-  (1, 35455, TIMESTAMP WITH TIME ZONE'2020-06-14T00:00:00.000+00:00', TIMESTAMP WITH TIME ZONE'2020-12-31T23:59:59.000+00:00', 0, 35.35, 1, 'EUR');
+  (1, 35455, TIMESTAMP WITH TIME ZONE'2020-06-14T00:00:00.000+00:00', TIMESTAMP WITH TIME ZONE'2020-12-31T23:59:59.000+00:00', 0, 35.50, 1, 'EUR');
 
 INSERT INTO prices
   (brand_id, product_id, start_date, end_date, priority, price, price_list, curr)
