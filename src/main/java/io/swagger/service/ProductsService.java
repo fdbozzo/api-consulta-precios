@@ -4,7 +4,6 @@ import io.swagger.model.Prices;
 import io.swagger.repository.PricesRepository;
 import java.io.IOException;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class ProductsService {
       Integer productId,
       OffsetDateTime qryDate) throws IOException {
 
-    List<Prices> prices = pricesRepository.findByBrandIdProductIdDatetime(brandId, productId, qryDate);
+    List<Prices> prices = pricesRepository.findByBrandIdProductIdDatetimeByMaxPriority(brandId, productId, qryDate);
     return prices;
   }
 
