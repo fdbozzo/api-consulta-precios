@@ -1,13 +1,13 @@
 package io.swagger.model;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter

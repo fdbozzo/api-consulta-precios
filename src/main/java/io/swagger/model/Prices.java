@@ -1,7 +1,6 @@
 package io.swagger.model;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -22,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter

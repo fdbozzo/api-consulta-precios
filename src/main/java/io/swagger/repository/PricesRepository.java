@@ -2,12 +2,12 @@ package io.swagger.repository;
 
 import io.swagger.model.Prices;
 import io.swagger.model.PricesCompositeKey;
-import java.time.OffsetDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import java.time.OffsetDateTime;
 
 @Repository
 public interface PricesRepository extends JpaRepository<Prices, PricesCompositeKey> {

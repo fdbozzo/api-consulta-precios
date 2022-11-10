@@ -3,13 +3,14 @@ package io.swagger.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 import javax.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
+import java.time.OffsetDateTime;
 
 /**
- * PriceApiResponse
+ * PriceApiResponseInner
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-11-07T10:28:17.635Z[GMT]")
@@ -20,11 +21,13 @@ public class PriceApiResponseInner {
   private Integer brandId = null;
 
   @JsonProperty("start_date")
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS+00:00")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
   private OffsetDateTime startDate = null;
 
   @JsonProperty("end_date")
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS+00:00")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
   private OffsetDateTime endDate = null;
 
   @JsonProperty("product_id")
@@ -213,15 +216,15 @@ public class PriceApiResponseInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PriceApiResponseInner priceApiResponse = (PriceApiResponseInner) o;
-    return Objects.equals(this.brandId, priceApiResponse.brandId) &&
-        Objects.equals(this.startDate, priceApiResponse.startDate) &&
-        Objects.equals(this.endDate, priceApiResponse.endDate) &&
-        Objects.equals(this.productId, priceApiResponse.productId) &&
-        Objects.equals(this.price, priceApiResponse.price) &&
-        Objects.equals(this.priceList, priceApiResponse.priceList) &&
-        Objects.equals(this.priority, priceApiResponse.priority) &&
-        Objects.equals(this.curr, priceApiResponse.curr);
+    PriceApiResponseInner priceApiResponseInner = (PriceApiResponseInner) o;
+    return Objects.equals(this.brandId, priceApiResponseInner.brandId) &&
+        Objects.equals(this.startDate, priceApiResponseInner.startDate) &&
+        Objects.equals(this.endDate, priceApiResponseInner.endDate) &&
+        Objects.equals(this.productId, priceApiResponseInner.productId) &&
+        Objects.equals(this.price, priceApiResponseInner.price) &&
+        Objects.equals(this.priceList, priceApiResponseInner.priceList) &&
+        Objects.equals(this.priority, priceApiResponseInner.priority) &&
+        Objects.equals(this.curr, priceApiResponseInner.curr);
   }
 
   @Override
@@ -232,7 +235,7 @@ public class PriceApiResponseInner {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PriceApiResponse {\n");
+    sb.append("class PriceApiResponseInner {\n");
 
     sb.append("    brandId: ").append(toIndentedString(brandId)).append("\n");
     sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");
