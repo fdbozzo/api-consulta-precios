@@ -11,11 +11,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import springfox.documentation.oas.annotations.EnableOpenApi;
+//import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
-@EnableOpenApi
+//@EnableOpenApi
 @EntityScan("io.swagger.model")
 @ComponentScan(basePackages = { "io.swagger", "io.swagger.api", "io.swagger.configuration",
     "io.swagger.service"})
@@ -33,14 +32,14 @@ public class Swagger2SpringBoot implements CommandLineRunner {
         new SpringApplication(Swagger2SpringBoot.class).run(args);
     }
 
-    @Configuration
-    static class CustomDateConfig extends WebMvcConfigurerAdapter {
-        @Override
-        public void addFormatters(FormatterRegistry registry) {
-            registry.addConverter(new LocalDateConverter("yyyy-MM-dd"));
-            registry.addConverter(new LocalDateTimeConverter("yyyy-MM-dd'T'HH:mm:ss"));
-        }
-    }
+//    @Configuration
+//    static class CustomDateConfig extends WebMvcConfigurerAdapter {
+//        @Override
+//        public void addFormatters(FormatterRegistry registry) {
+//            registry.addConverter(new LocalDateConverter("yyyy-MM-dd"));
+//            registry.addConverter(new LocalDateTimeConverter("yyyy-MM-dd'T'HH:mm:ss"));
+//        }
+//    }
 
     class ExitException extends RuntimeException implements ExitCodeGenerator {
         private static final long serialVersionUID = 1L;

@@ -57,9 +57,9 @@ public interface ProductsApi {
       tags = { "Prices" },
       responses = {
           @ApiResponse(responseCode = "200", description = "successful operation", content = {
-              @Content(mediaType = "application/json", schema = @Schema(implementation = PriceApiResponseInner.class))
+              @Content(mediaType = "application/json", schema = @Schema(implementation = PriceApiResponseInner.class) )
           }),
-          @ApiResponse(responseCode = "400", description = "Invalid BrandId/ProductId/Datetime value"),
+          @ApiResponse(responseCode = "400", description = "Invalid BrandId/ProductId/Datetime value", content = @Content),
           @ApiResponse(responseCode = "404", description = "BrandId/ProductId/Datetime not found"),
           @ApiResponse(responseCode = "500", description = "An error occured while processing the request. Please, contact admin@business.com ")
       }
