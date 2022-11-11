@@ -38,8 +38,11 @@ public class GlobalExceptionRestController extends ResponseEntityExceptionHandle
     }
 
     @ExceptionHandler({IOException.class})
-    public ResponseEntity<String> ioExceptionHandler(IOException ioException) {
-        return new ResponseEntity<>(ioException.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<ApiException> ioExceptionHandler(IOException ioException) {
+//        return new ResponseEntity<>(ioException.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(
+            new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), ioException.getMessage()) ,
+            HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({NotFoundException.class})

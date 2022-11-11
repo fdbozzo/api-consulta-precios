@@ -4,12 +4,15 @@
  */
 package io.swagger.api;
 
+import io.swagger.exceptions.ApiException;
+import io.swagger.exceptions.NotFoundException;
 import io.swagger.model.PriceApiResponse;
 import io.swagger.model.PriceApiResponseInner;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -57,14 +60,46 @@ public interface ProductsApi {
       summary = "Busca un artículo por marca, id prod. y fecha/hora",
       tags = { "Prices" },
       responses = {
-          @ApiResponse(responseCode = "200", description = "successful operation", content = {
+          @ApiResponse(responseCode = "200",
+              description = "successful operation",
+              content = {
               @Content(mediaType = "application/json", array =
                   @ArraySchema(schema = @Schema(implementation = PriceApiResponseInner.class))
                   )
           }),
-          @ApiResponse(responseCode = "400", description = "Invalid BrandId/ProductId/Datetime value", content = @Content()),
-          @ApiResponse(responseCode = "404", description = "BrandId/ProductId/Datetime not found", content = @Content()),
-          @ApiResponse(responseCode = "500", description = "An error occured while processing the request. Please, contact admin@business.com ", content = @Content())
+          @ApiResponse(responseCode = "400",
+              description = "Invalid BrandId/ProductId/Datetime value",
+              content = @Content(mediaType = "application/json",
+                  schema = @Schema(implementation = ApiResponseMessage.class),
+                  examples = {@ExampleObject(value = "{\n"
+                  + "  \"code\": 3,\n"
+                  + "  \"type\": \"400 BAD_REQUEST\",\n"
+                  + "  \"message\": \"Failed to convert value of type 'java.lang.String' to required type 'java.time.OffsetDateTime'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [@javax.validation.constraints.NotNull @io.swagger.v3.oas.annotations.Parameter @javax.validation.Valid @org.springframework.web.bind.annotation.RequestParam @org.springframework.format.annotation.DateTimeFormat java.time.OffsetDateTime] for value '2020-10-14T00:00:00'; nested exception is java.time.format.DateTimeParseException: Text '2020-10-14T00:00:00' could not be parsed at index 19\"\n"
+                  + "}")})),
+          @ApiResponse(responseCode = "404",
+              description = "BrandId/ProductId/Datetime not found",
+              content = @Content(mediaType = "application/json",
+                  schema = @Schema(implementation = ApiException.class),
+                  examples = {@ExampleObject(value = "{\n"
+                  + "  \"cause\": null,\n"
+                  + "  \"stackTrace\": [],\n"
+                  + "  \"message\": \"BrandId/ProductId/Datetime not found\",\n"
+                  + "  \"suppressed\": [],\n"
+                  + "  \"localizedMessage\": \"BrandId/ProductId/Datetime not found\"\n"
+                  + "}")}
+          )),
+          @ApiResponse(responseCode = "500",
+              description = "An error occured while processing the request. Please, contact admin@business.com ",
+              content = @Content(mediaType = "application/json",
+                  schema = @Schema(implementation = ApiException.class),
+                  examples = {@ExampleObject(value = "{\n"
+                      + "  \"cause\": null,\n"
+                      + "  \"stackTrace\": [],\n"
+                      + "  \"message\": \"Internal Server Error\",\n"
+                      + "  \"suppressed\": [],\n"
+                      + "  \"localizedMessage\": \"Internal Server Error\"\n"
+                      + "}")}
+              ))
       }
   )
 

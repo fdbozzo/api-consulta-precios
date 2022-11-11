@@ -55,7 +55,7 @@ public class ProductsApiController implements ProductsApi {
         Integer brandId,
         Integer productId, java.time.OffsetDateTime qryDate) {
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        if (accept != null && (accept.contains("application/json") || accept.contains("*/*"))) {
             try {
                 List<Prices> prices = productsService.findByBrandIdProductIdDatetime(brandId, productId, qryDate);
                 PriceApiResponse priceApiResponse;
@@ -75,7 +75,7 @@ public class ProductsApiController implements ProductsApi {
                     priceApiResponse.add(priceApiResponseInner);
                     httpStatus = HttpStatus.OK;
                 } else {
-                    throw new NotFoundException(HttpStatus.NOT_FOUND.value(), "Record not found");
+                    throw new NotFoundException(HttpStatus.NOT_FOUND.value(), "BrandId/ProductId/Datetime not found");
 
                 }
                 return new ResponseEntity<List<PriceApiResponseInner>>(priceApiResponse, httpStatus);

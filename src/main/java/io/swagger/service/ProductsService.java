@@ -26,7 +26,7 @@ public class ProductsService {
     List<Prices> prices = pricesRepository.findByBrandIdProductIdDatetimeByMaxPriority(brandId, productId, qryDate);
 
     if (prices == null || prices.size() == 0) {
-      throw new NotFoundException(HttpStatus.NOT_FOUND.value(), "Record not found");
+      throw new NotFoundException(HttpStatus.NOT_FOUND.value(), "BrandId/ProductId/Datetime not found");
     }
 
     return prices;
