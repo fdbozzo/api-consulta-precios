@@ -1,39 +1,27 @@
 package io.swagger.api;
 
-import io.swagger.model.PriceApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.exceptions.ApiException;
+import io.swagger.exceptions.NotFoundException;
+import io.swagger.model.PriceApiResponse;
 import io.swagger.model.PriceApiResponseInner;
 import io.swagger.model.Prices;
 import io.swagger.service.ProductsService;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.time.OffsetDateTime;
 
 @Slf4j
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-11-07T10:28:17.635Z[GMT]")
 @RestController
-//@CrossOrigin(origins="*")
+@CrossOrigin(origins="*")
 public class ProductsApiController implements ProductsApi {
-
-    //private static final Logger log = LoggerFactory.getLogger(ProductsApiController.class);
 
     private final ObjectMapper objectMapper;
 
@@ -66,7 +54,6 @@ public class ProductsApiController implements ProductsApi {
     public ResponseEntity<List<PriceApiResponseInner>> findByBrandIdProductIdDatetime(
         Integer brandId,
         Integer productId, java.time.OffsetDateTime qryDate) {
-        //return ProductsApi.super.findByBrandIdProductIdDatetime(brandId, productId, qryDate);
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -88,36 +75,19 @@ public class ProductsApiController implements ProductsApi {
                     priceApiResponse.add(priceApiResponseInner);
                     httpStatus = HttpStatus.OK;
                 } else {
-                    priceApiResponse = new PriceApiResponse();
-                    httpStatus = HttpStatus.NOT_FOUND;
-                    HttpHeaders responseHeaders = new HttpHeaders();
-                    responseHeaders.set("message", "Record not found");
-                    return new ResponseEntity<List<PriceApiResponseInner>>(priceApiResponse, responseHeaders, httpStatus);
-
-//                    getRequest().ifPresent(request -> {
-//                        for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-//                            if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-//                                String exampleString = "{ \"end_date\" : \"2000-01-23T04:56:07.000+00:00\", \"price_list\" : 5, \"price\" : 1.4658129805029452, \"product_id\" : 6, \"priority\" : 5, \"curr\" : \"curr\", \"brand_id\" : 0, \"start_date\" : \"2000-01-23T04:56:07.000+00:00\" }";
-//                                ApiUtil.setExampleResponse(request, "application/json", exampleString);
-//                                break;
-//                            }
-//                        }
-//                    });
+                    throw new NotFoundException(HttpStatus.NOT_FOUND.value(), "Record not found");
 
                 }
-                //return new ResponseEntity<PriceApiResponse>(priceApiResponse, httpStatus);
                 return new ResponseEntity<List<PriceApiResponseInner>>(priceApiResponse, httpStatus);
-//                return new ResponseEntity<PriceApiResponse>(
-//                    productsService.findByBrandIdProductIdDatetime(brandId, productId, qryDate),
-//                    HttpStatus.OK
-//                );
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                //return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new RuntimeException(e);
             }
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        //return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        throw new ApiException(HttpStatus.NOT_IMPLEMENTED.value(), "FUNCITONALLITY NOT IMPLEMENTED");
 
     }
 }

@@ -11,9 +11,9 @@ public class ApiResponseMessage {
     public static final int OK = 4;
     public static final int TOO_BUSY = 5;
 
-    int code;
-    String type;
-    String message;
+    private int code;
+    private String type;
+    private String message;
 
     public ApiResponseMessage(){}
 
@@ -42,7 +42,13 @@ public class ApiResponseMessage {
         this.message = message;
     }
 
-    @XmlTransient
+    public ApiResponseMessage(String type, String message) {
+        this.code = INFO;
+        this.type = type;
+        this.message = message;
+    }
+
+        @XmlTransient
     public int getCode() {
         return code;
     }

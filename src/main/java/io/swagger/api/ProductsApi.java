@@ -9,6 +9,7 @@ import io.swagger.model.PriceApiResponseInner;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -57,11 +58,13 @@ public interface ProductsApi {
       tags = { "Prices" },
       responses = {
           @ApiResponse(responseCode = "200", description = "successful operation", content = {
-              @Content(mediaType = "application/json", schema = @Schema(implementation = PriceApiResponseInner.class) )
+              @Content(mediaType = "application/json", array =
+                  @ArraySchema(schema = @Schema(implementation = PriceApiResponseInner.class))
+                  )
           }),
-          @ApiResponse(responseCode = "400", description = "Invalid BrandId/ProductId/Datetime value", content = @Content),
-          @ApiResponse(responseCode = "404", description = "BrandId/ProductId/Datetime not found"),
-          @ApiResponse(responseCode = "500", description = "An error occured while processing the request. Please, contact admin@business.com ")
+          @ApiResponse(responseCode = "400", description = "Invalid BrandId/ProductId/Datetime value", content = @Content()),
+          @ApiResponse(responseCode = "404", description = "BrandId/ProductId/Datetime not found", content = @Content()),
+          @ApiResponse(responseCode = "500", description = "An error occured while processing the request. Please, contact admin@business.com ", content = @Content())
       }
   )
 
